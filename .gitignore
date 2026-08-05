@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+.terraform.lock.hcl
+
+# Azure Functions
+local.settings.json
+bin/
+obj/
+
+# Data (optional — depends if you want sample CSVs in the repo)
+# Uncomment if you don't want generated data files tracked:
+# data/*.csv
+# data/*.parquet
+
+# Env / secrets
+.env
+*.pem
+
+# OS/editor
+.DS_Store
+Thumbs.db
