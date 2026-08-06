@@ -1,14 +1,14 @@
-\## CI/CD Notes
+\## CI/CD
 
 
 
-This project uses GitHub Actions for automated testing (Pytest, linting) on every push/PR. 
+GitHub Actions runs on every push/PR:
+
+\- \*\*Test \& Lint\*\*: Pytest suite + flake8 on the data validation logic
+
+\- \*\*Terraform Validate \& Format\*\*: Confirms the Terraform configuration is syntactically valid and correctly formatted, without requiring cloud credentials
 
 
 
-Terraform deployment (`terraform apply`) is run manually rather than via CI, because the Azure tenant used for this project (an institutional/student subscription) restricts service principal creation, which is normally required for GitHub Actions to authenticate with Azure. In a production environment with an unrestricted subscription, this would be automated via OIDC federated credentials or a service principal stored in GitHub Secrets.
-
-
-
-The `terraform-plan` job in the workflow demonstrates the intended automation and will run once appropriate credentials are available.
+\*\*Note on deployment\*\*: `terraform plan`/`apply` are run manually rather than in CI. The Azure tenant used for this project (an institutional subscription) restricts service principal / app registration creation, which is required for GitHub Actions to authenticate with Azure. In an unrestricted environment, this would be automated via OIDC federated credentials. This is a real, common constraint in enterprise/institutional cloud environments — not a limitation of the pipeline design itself.
 
