@@ -12,19 +12,25 @@ Most "serverless pipeline" tutorials stop at S3 -> Lambda -> output bucket. Stra
 Raw CSV Upload (Blob Storage)
 |
 v
+
 Azure Function (Blob Trigger)
 |
 v
+
 Pandera Schema Validation --> Invalid rows quarantined (reason logged)
 |
 v
+
 Valid rows -> Pandas Transform
 |
 v
+
 Parquet Output (Blob Storage) --> 61.7% smaller than source CSV
 |
 v
+
 Synapse Serverless SQL Pool --> Queryable via standard SQL, no ETL into a database
+
 ## Tech Stack
 
 | Layer | Tool |
@@ -124,11 +130,19 @@ Estimated cost for 1,000 pipeline runs/month (small CSV files): **under $1/month
 
 ## Project Structure
 stratoflow/
+
 ├── schemas/ # Pandera validation schemas
+
 ├── scripts/ # Data generation, validation, split, Parquet conversion
+
 ├── tests/ # Pytest suite
+
 ├── sql/ # Synapse analytics queries
+
 ├── terraform/ # Infrastructure as code (iam, storage, synapse)
+
 ├── function_app.py # Azure Functions pipeline (blob trigger)
+
 ├── .github/workflows/ # CI/CD pipeline
+
 └── data/ # Sample dataset
