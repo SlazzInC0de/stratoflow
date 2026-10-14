@@ -11,7 +11,7 @@ jobs:
     name: Test & Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -21,10 +21,26 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install pytest pandera pandas pyarrow flake8
+          pip install pytest pytest-cov flake8
 
-      - name: Run tests
-        run: pytest -v
+      - name: Run tests with coverage
+        shell: bash
+        env:
+          DISABLE_PANDERA_IMPORT_WARNING: "True"
+        run: |
+          pytest -v --cov=function_app --cov=schemas --cov=scripts.split_valid_invalid --cov-report=term-missing | tee pytest-output.txt
+
+      - name: Measure storage formats
+        shell: bash
+        run: python scripts/measure_storage.py | tee storage-output.txt
+
+      - name: Publish results to job summary
+        if: always()
+        run: |
+          {
+            echo "## Coverage"; echo '```'; sed -n '/coverage:/,/TOTAL/p' pytest-output.txt; echo '```'
+            echo "## Storage comparison"; cat storage-output.txt
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Lint
         run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
@@ -37,7 +53,7 @@ jobs:
       run:
         working-directory: ./terraform
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3

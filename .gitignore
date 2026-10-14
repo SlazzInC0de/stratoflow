@@ -27,4 +27,5 @@ obj/
 
 # OS/editor
 .DS_Store
-Thumbs.db
+Thumbs.db.coverage
+.pytest_cache/
