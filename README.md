@@ -18,6 +18,10 @@
 
 ---
 
+**Contents:** [Highlights](#-highlights) · [Architecture](#️-architecture) · [Validation and quarantine](#️-validation-and-quarantine) · [Storage: measured, not estimated](#-storage-measured-not-estimated) · [Analytics layer](#-analytics-layer) · [Tech stack](#-tech-stack) · [Run it locally](#-run-it-locally) · [Tests](#-tests) · [Design decisions](#-design-decisions) · [CI/CD](#-cicd) · [Cost](#-cost) · [Roadmap](#️-roadmap) · [Project structure](#-project-structure) · [Security and privacy](#-security-and-privacy) · [License](#-license)
+
+---
+
 ## ✨ Highlights
 
 | | |
@@ -188,6 +192,13 @@ stratoflow/
 ├── data/                  # Sample dataset and outputs
 └── .github/workflows/     # CI pipeline
 ```
+
+## 🔒 Security and privacy
+
+- Storage containers are private and access is granted through Terraform-managed RBAC.
+- Azure credentials live in GitHub Actions secrets, never in the repo.
+- The bundled data is synthetic sensor data, not real user data.
+- Found a vulnerability? Please report it privately as described in [SECURITY.md](SECURITY.md).
 
 ## 📄 License
 
